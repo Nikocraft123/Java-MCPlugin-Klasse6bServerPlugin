@@ -1,0 +1,6 @@
+name: Klasse6bServer
+version: ${project.version}
+main: de.nikocraft.class6bserver.Main
+api-version: 1.17
+authors: [ Nikolas, Reik, Till ]
+description: Das Serverplugin des Klassenservers 6b.
