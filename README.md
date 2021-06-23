@@ -22,6 +22,7 @@ Notizen:
   - Super Tnt
   - Wirfbare Feuerbälle
   - Teleporter Block
+  - Extra Pflanzen Blöcke
 
 - Welten
   - Lobby
@@ -35,3 +36,6 @@ Notizen:
   - Custom Villager
   - Individuelle Strukturen
   - Spezielle Erzgenerierung
+  - Coole Pflanzen
+  - Starter Truhe
+  - Gute Enderchest (Rank abhängig)
