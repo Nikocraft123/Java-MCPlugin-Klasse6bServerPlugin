@@ -24,7 +24,9 @@ Notizen:
   - Teleporter Block
 
 - Welten
-
+  - Lobby
+  - Standard Überleben
+  - Kreativ Test
 
 - Extra Features
   - Spieler Teleporter (Mit Anfrage)
@@ -32,3 +34,4 @@ Notizen:
   - Eigene Währung
   - Custom Villager
   - Individuelle Strukturen
+  - Spezielle Erzgenerierung
