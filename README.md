@@ -5,5 +5,5 @@ The Java Minecraft Plugin (Spigot) for the 6b Class Server.
 |---------------|-----------------------------|
 | Reik          | Server mieten/organisieren  |
 | Nikolas       | Plugin/Mods entwickeln      |
-| Till          | Server Ideen/Konzept        |
+| Till          | Server Ideen/Konzept/InGame |
 | ...           | ...                         |
