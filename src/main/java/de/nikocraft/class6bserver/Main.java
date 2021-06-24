@@ -1,57 +1,80 @@
 //PACKAGE
 package de.nikocraft.class6bserver;
 
+
 //IMPORTS
 
-//Bukkit
+//Nikocraft
 import de.nikocraft.class6bserver.events.ConnectionListeners;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import de.nikocraft.class6bserver.permissions.PermissionManager;
+import de.nikocraft.class6bserver.utils.Config;
+
+//Bukkit
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
 
 //MAIN CLASS
 public final class Main extends JavaPlugin {
 
     //VARIABLES
 
-    //The instance of the Main
+    //The instance of the main
     public static Main instance;
+
+    //The permission manager of the permission system
+    private PermissionManager permissionManager;
+
+    //The master configuration of the plugin
+    private Config masterConfig;
+
+    //The permission system configuration
+    private Config permissionConfig;
 
 
     //OVERRIDE METHODS
 
-    //Called, if the Plugin is loading
+    //Called, if the plugin is loading
     @Override
     public void onLoad() {
 
         //Set the instance to this
         instance = this;
 
+        //Load configurations
+        String configPath = "./plugins/Klasse6bServer/Configs/";
+        masterConfig = new Config(configPath, "MasterConfig.yml");
+        permissionConfig = new Config(configPath, "PermissionConfig.yml");
+
     }
 
-    //Called, if the Plugin is enabling
+    //Called, if the plugin is enabling
     @Override
     public void onEnable() {
 
-        //Register Listeners
+        //Register listeners
         Bukkit.getPluginManager().registerEvents(new ConnectionListeners(), this);
+
+        //Define permission manage
+        permissionManager = new PermissionManager();
 
     }
 
-    //Called, if the Plugin is disabling
+    //Called, if the plugin is disabling
     @Override
     public void onDisable() {
 
-
+        //Save configurations
+        masterConfig.save();
+        permissionConfig.save();
 
     }
 
 
     //METHODS
 
-    //Get the prefix of the Plugin for the console
+    //Get the prefix of the plugin for the console
     public static String getConsolePrefix() {
 
         //Return prefix string
@@ -59,30 +82,36 @@ public final class Main extends JavaPlugin {
 
     }
 
-    //Get the prefix of the Plugin for the chat
-    public static TextComponent getChatPrefix(TextComponent message) {
+    //Get the prefix of the plugin for the chat
+    public static String getChatPrefix() {
 
-        //Build prefix
-        TextComponent prefix = new TextComponent(ChatColor.GRAY + "[");
-        TextComponent prefixName = new TextComponent(ChatColor.GREEN.toString() + ChatColor.BOLD + "S. P." + ChatColor.RESET);
-        prefixName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(ChatColor.GREEN.toString() + ChatColor.ITALIC + "Klasse 6b - Server Plugin")));
-        prefix.addExtra(prefixName);
-        prefix.addExtra(ChatColor.GRAY + "] " + ChatColor.RESET + ChatColor.YELLOW);
-
-        //Add message to prefix
-        prefix.addExtra(message);
-
-        //Return prefix component
-        return prefix;
+        //Return prefix string
+        return ChatColor.GRAY + "[" + ChatColor.GOLD + ChatColor.BOLD + "Server" + ChatColor.RESET +
+                ChatColor.GRAY + "] " + ChatColor.WHITE;
 
     }
 
 
-    //GETTER
+    //GETTERS
 
-    //The instance of the Main
+    //The instance of the main
     public static Main getInstance() {
         return instance;
+    }
+
+    //The permission manager of the permission system
+    public PermissionManager getPermissionManager() {
+        return permissionManager;
+    }
+
+    //The master configuration of the plugin
+    public Config getMasterConfig() {
+        return masterConfig;
+    }
+
+    //The permission system configuration
+    public Config getPermissionConfig() {
+        return permissionConfig;
     }
 
 }

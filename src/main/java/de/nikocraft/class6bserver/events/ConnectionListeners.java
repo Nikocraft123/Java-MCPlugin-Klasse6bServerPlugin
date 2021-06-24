@@ -1,18 +1,26 @@
 //PACKAGE
 package de.nikocraft.class6bserver.events;
 
+
 //IMPORTS
 
-//Bukkit
+//Nikocraft
 import de.nikocraft.class6bserver.Main;
-import net.md_5.bungee.api.chat.TextComponent;
+
+//Bukkit
+import de.nikocraft.class6bserver.permissions.CustomPermissibleBase;
+import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-//CONNECTION LISTENERS CLASS
+import java.lang.reflect.Field;
+
+
+//CONNECTION LISTENER CLASS
 public class ConnectionListeners implements Listener {
 
     //EVENT HANDLER METHODS
@@ -21,7 +29,19 @@ public class ConnectionListeners implements Listener {
     @EventHandler
     public void onLogin(PlayerLoginEvent event) {
 
+        try {
+            //Try to set the permissible base of the player to the custom permissible base
+            Field field = CraftHumanEntity.class.getDeclaredField("perm");
+            field.setAccessible(true);
+            field.set(event.getPlayer(), new CustomPermissibleBase(event.getPlayer()));
+            field.setAccessible(false);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            //Catch Error
+            e.printStackTrace();
+        }
 
+        //Load the rank of the player
+        //TODO
 
     }
 
@@ -29,8 +49,8 @@ public class ConnectionListeners implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
 
-        //TEMP TEST
-        event.getPlayer().spigot().sendMessage(Main.getChatPrefix(new TextComponent("Herzlich Willkommen auf dem Server!")));
+        //Send welcome message to player
+        event.getPlayer().sendMessage(Main.getChatPrefix() + ChatColor.YELLOW + "Herzlich Willkommen auf dem Server!");
 
     }
 
@@ -38,7 +58,7 @@ public class ConnectionListeners implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
 
-
+        //TODO
 
     }
 
