@@ -19,6 +19,7 @@ public final class Main extends JavaPlugin {
     //The instance of the Main
     public static Main instance;
 
+
     //OVERRIDE METHODS
 
     //Called, if the Plugin is loading
@@ -46,6 +47,7 @@ public final class Main extends JavaPlugin {
 
 
     }
+
 
     //METHODS
 
