@@ -28,6 +28,7 @@ Notizen:
 - Custom Blocks
   - Vertical Slabs
   - Super Tnt
+  - Wasserdichtes Tnt
   - Wirfbare Feuerbälle
   - Teleporter Block
   - Extra Pflanzen
