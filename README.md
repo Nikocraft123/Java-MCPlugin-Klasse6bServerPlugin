@@ -8,6 +8,13 @@ The Java Minecraft Plugin (Spigot) for the 6b Class Server.
 | Till          | Server Ideen/Konzept/InGame |
 | ...           | ...                         |
 
+Ranks:
+- Admin
+- Op
+- VIP
+- Player
+- Guest
+
 Notizen:
 
 - Inventar Shop
