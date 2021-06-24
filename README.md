@@ -23,13 +23,14 @@ Notizen:
 
 - Custom Items
   - (Alle Blöcke von unten)
+  - Custom Werkzeuge/Waffen
 
 - Custom Blocks
   - Vertical Slabs
   - Super Tnt
   - Wirfbare Feuerbälle
   - Teleporter Block
-  - Extra Pflanzen Blöcke
+  - Extra Pflanzen
 
 - Welten
   - Lobby
@@ -46,3 +47,4 @@ Notizen:
   - Coole Pflanzen
   - Starter Truhe
   - Gute Enderchest (Rank abhängig)
+  - Inventar Taschen
