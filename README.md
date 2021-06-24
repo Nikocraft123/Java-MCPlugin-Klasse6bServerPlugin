@@ -23,7 +23,7 @@ Notizen:
 
 - Custom Items
   - (Alle Blöcke von unten)
-  - Custom Werkzeuge/Waffen
+  - Custom Werkzeuge/Waffen/Rüstungen
 
 - Custom Blocks
   - Vertical Slabs
@@ -32,6 +32,7 @@ Notizen:
   - Wirfbare Feuerbälle
   - Teleporter Block
   - Extra Pflanzen
+  - Custom Erze
 
 - Welten
   - Lobby
@@ -49,3 +50,4 @@ Notizen:
   - Starter Truhe
   - Gute Enderchest (Rank abhängig)
   - Inventar Taschen
+  - Zusätzliche Erze
