@@ -96,11 +96,57 @@ public class PermissionManager {
         //Get player permission list
         ArrayList<String> permissions = getPlayerExtraPermissions(player);
 
-        //Remove the new permission
+        //Remove the permission
         permissions.remove(permission);
 
         //Set the permission list to config
         config.getConfig().set("player.uuids." + player.getUniqueId().toString() + ".extra_permissions", permissions);
+
+        //Save the configuration to update changes
+        config.save();
+
+        //Return true
+        return true;
+
+    }
+
+    //Add permission to a rank
+    public boolean addRankPermission(PlayerRank rank, String permission) {
+
+        //If the permission already contains, return false
+        if (getRankPermissions(rank).contains(permission)) return false;
+
+        //Get rank permission list
+        ArrayList<String> permissions = getRankPermissions(rank);
+
+        //Add the new permission
+        permissions.add(permission);
+
+        //Set the permission list to config
+        config.getConfig().set("rank." + rank.getRankName() + ".permissions", permissions);
+
+        //Save the configuration to update changes
+        config.save();
+
+        //Return true
+        return true;
+
+    }
+
+    //Remove permission to a rank
+    public boolean removeRankPermission(PlayerRank rank, String permission) {
+
+        //If the permission doesn't contains, return false
+        if (!getRankPermissions(rank).contains(permission)) return false;
+
+        //Get rank permission list
+        ArrayList<String> permissions = getRankPermissions(rank);
+
+        //Remove the permission
+        permissions.remove(permission);
+
+        //Set the permission list to config
+        config.getConfig().set("rank." + rank.getRankName() + ".permissions", permissions);
 
         //Save the configuration to update changes
         config.save();

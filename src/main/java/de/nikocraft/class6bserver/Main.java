@@ -5,6 +5,7 @@ package de.nikocraft.class6bserver;
 //IMPORTS
 
 //Nikocraft
+import de.nikocraft.class6bserver.commands.PermissionCommand;
 import de.nikocraft.class6bserver.events.ConnectionListeners;
 import de.nikocraft.class6bserver.permissions.PermissionManager;
 import de.nikocraft.class6bserver.utils.Config;
@@ -56,6 +57,9 @@ public final class Main extends JavaPlugin {
         //Register listeners
         Bukkit.getPluginManager().registerEvents(new ConnectionListeners(), this);
 
+        //Register commands
+        getCommand("permission").setExecutor(new PermissionCommand());
+
         //Define permission manage
         permissionManager = new PermissionManager();
 
@@ -78,7 +82,7 @@ public final class Main extends JavaPlugin {
     public static String getConsolePrefix() {
 
         //Return prefix string
-        return "[Klasse 6b - Server Plugin] ";
+        return "[Server Plugin] ";
 
     }
 

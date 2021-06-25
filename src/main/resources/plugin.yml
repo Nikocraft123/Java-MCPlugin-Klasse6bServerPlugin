@@ -4,3 +4,10 @@ main: de.nikocraft.class6bserver.Main
 api-version: 1.17
 authors: [ Nikolas, Reik, Till ]
 description: Das Serverplugin des Klassenservers 6b.
+commands:
+  permission:
+    aliases: [ perm ]
+    description: "Rechte Verwaltung [Admin Befehl]"
+    usage: "Für Hilfe '/permission help' eingeben!"
+    permission: server.command.permission
+    permission-message: "Du besitzt nicht das Recht, Rechte zu verwalten!"
