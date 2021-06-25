@@ -32,7 +32,10 @@ Notizen:
   - Wirfbare Feuerbälle
   - Teleporter Block
   - Extra Pflanzen
-  - Custom Erze
+  - Custom Erze (Rotes Kupfer [Im End])
+
+- Custom Rezepte
+  - (Siehe Tills Papierskizzen)
 
 - Welten
   - Lobby
