@@ -1,7 +1,6 @@
 //PACKAGE
 package de.nikocraft.class6bserver.permissions.enums;
 
-
 //PLAYER PERMISSION RANK ENUM
 public enum PlayerRank {
 
@@ -16,10 +15,10 @@ public enum PlayerRank {
     //VARIABLES
 
     //The name of the rank
-    private String rankName;
+    private final String rankName;
 
     //The ID of the rank
-    private int rankId;
+    private final int rankId;
 
 
     //CONSTRUCTOR
@@ -28,6 +27,26 @@ public enum PlayerRank {
         //Set variables
         this.rankName = rankName;
         this.rankId = rankId;
+
+    }
+
+
+    //STATIC METHODS
+
+    //Get a player rank from id
+    public static PlayerRank fromRankId(int rankId) {
+
+        //Loop for each rank
+        for (PlayerRank rank : PlayerRank.values()) {
+            //If the rank founded, return it
+            if (rank.getRankId() == rankId) return rank;
+        }
+
+        //Log Error
+        //TODO
+
+        //Return guest rank
+        return PlayerRank.Guest;
 
     }
 

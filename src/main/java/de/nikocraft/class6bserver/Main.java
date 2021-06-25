@@ -21,7 +21,7 @@ public final class Main extends JavaPlugin {
     //VARIABLES
 
     //The instance of the main
-    public static Main instance;
+    private static Main instance;
 
     //The permission manager of the permission system
     private PermissionManager permissionManager;
@@ -72,7 +72,7 @@ public final class Main extends JavaPlugin {
     }
 
 
-    //METHODS
+    //STATIC METHODS
 
     //Get the prefix of the plugin for the console
     public static String getConsolePrefix() {

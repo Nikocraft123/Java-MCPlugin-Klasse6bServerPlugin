@@ -29,7 +29,7 @@ public class PermissionManager {
     public PermissionManager() {
 
         //Get the permission config from main
-        config = Main.instance.getPermissionConfig();
+        config = Main.getInstance().getPermissionConfig();
 
     }
 
@@ -112,8 +112,42 @@ public class PermissionManager {
 
     //Set the rank of a player
     public boolean setPlayerRank(Player player, PlayerRank rank) {
+
+        //If the player has a rank in config
+        if (config.getConfig().contains("player.uuids." + player.getUniqueId().toString() + ".rank")) {
+            //Return false, if the current rank is equals to the new rank
+            if (config.getConfig().getInt("player.uuids." + player.getUniqueId().toString() + ".rank") == rank.getRankId()) return false;
+        }
+
+        //Set the rank
+        config.getConfig().set("player.uuids." + player.getUniqueId().toString() + ".rank", rank.getRankId());
+
+        //Save the configuration to update changes
+        config.save();
+
+        //Return true
         return true;
+
     }
-    //TODO
+
+    //Get the rank of a player
+    public PlayerRank getPlayerRank(Player player) {
+
+        //If the player has a rank in config
+        if (config.getConfig().contains("player.uuids." + player.getUniqueId().toString() + ".rank")) {
+            //Return the player rank from config
+            return PlayerRank.fromRankId(config.getConfig().getInt("player.uuids." + player.getUniqueId().toString() + ".rank"));
+        }
+
+        //Set the rank to guest
+        config.getConfig().set("player.uuids." + player.getUniqueId().toString() + ".rank", PlayerRank.Guest.getRankId());
+
+        //Save the configuration to update changes
+        config.save();
+
+        //Return guest rank
+        return PlayerRank.Guest;
+
+    }
 
 }

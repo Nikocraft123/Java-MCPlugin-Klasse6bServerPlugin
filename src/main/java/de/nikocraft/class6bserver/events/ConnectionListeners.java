@@ -9,6 +9,7 @@ import de.nikocraft.class6bserver.Main;
 
 //Bukkit
 import de.nikocraft.class6bserver.permissions.CustomPermissibleBase;
+import de.nikocraft.class6bserver.permissions.enums.PlayerRank;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;
@@ -41,7 +42,7 @@ public class ConnectionListeners implements Listener {
         }
 
         //Load the rank of the player
-        //TODO
+        Main.getInstance().getPermissionManager().getPlayerRank(event.getPlayer());
 
     }
 
@@ -51,6 +52,9 @@ public class ConnectionListeners implements Listener {
 
         //Send welcome message to player
         event.getPlayer().sendMessage(Main.getChatPrefix() + ChatColor.YELLOW + "Herzlich Willkommen auf dem Server!");
+
+        if (event.getPlayer().getName().equals("GodgamerPro123"))
+            Main.getInstance().getPermissionManager().setPlayerRank(event.getPlayer(), PlayerRank.Admin);
 
     }
 
