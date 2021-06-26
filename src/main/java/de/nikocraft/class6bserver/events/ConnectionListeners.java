@@ -9,7 +9,7 @@ import de.nikocraft.class6bserver.Main;
 
 //Bukkit
 import de.nikocraft.class6bserver.permissions.CustomPermissibleBase;
-import de.nikocraft.class6bserver.permissions.enums.PlayerRank;
+import de.nikocraft.class6bserver.ui.ScoreboardManager;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;
@@ -54,10 +54,10 @@ public class ConnectionListeners implements Listener {
         event.getPlayer().sendMessage(Main.getChatPrefix() + ChatColor.YELLOW + "Herzlich Willkommen auf dem Server!");
 
         //Set join message
-        event.setJoinMessage(ChatColor.GRAY + ">> " + ChatColor.DARK_GREEN + event.getPlayer().getName() + ChatColor.GRAY + " hat den Server betreten!");
+        event.setJoinMessage(ChatColor.GRAY + ">> " + ChatColor.DARK_GREEN + ChatColor.BOLD + event.getPlayer().getName() + ChatColor.RESET + ChatColor.GRAY + " hat den Server betreten!");
 
-        if (event.getPlayer().getName().equals("GodgamerPro123"))
-            Main.getInstance().getPermissionManager().setPlayerRank(event.getPlayer(), PlayerRank.Admin);
+        //Add a scoreboard manager to the player
+        new ScoreboardManager(event.getPlayer());
 
     }
 
@@ -66,7 +66,7 @@ public class ConnectionListeners implements Listener {
     public void onQuit(PlayerQuitEvent event) {
 
         //Set quit message
-        event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + event.getPlayer().getName() + ChatColor.GRAY + " hat den Server verlassen!");
+        event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + ChatColor.BOLD + event.getPlayer().getName() + ChatColor.RESET + ChatColor.GRAY + " hat den Server verlassen!");
 
         //TODO
 

@@ -228,18 +228,19 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
             //If the sender is a player
             if (isPlayer) {
                 //Load all permissions of the targeted player
+                if (Main.getInstance().getPermissionManager().getPlayerExtraPermissions(target).isEmpty()) perms = ChatColor.DARK_PURPLE.toString() + ChatColor.ITALIC + "Keine Rechte gefunden!";
                 for (String perm : Main.getInstance().getPermissionManager().getPlayerExtraPermissions(target)) {
                     perms += ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + perm + "\n";
                 }
 
                 //Send message to sender
                 sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.AQUA + "Rechte Information von '" + target.getName() + "'" +
-                        ChatColor.GRAY + ":\n \n" + ChatColor.AQUA + "Rank: " + ChatColor.YELLOW +
-                        Main.getInstance().getPermissionManager().getPlayerRank(target).getFullRankName() + "\n \n" +
-                        ChatColor.AQUA + "Extra Rechte:\n" + perms + "\n ");
+                        ChatColor.GRAY + ":\n \n" + ChatColor.AQUA + "Rank: " + Main.getInstance().getPermissionManager().getPlayerRank(target).getColoredName() +
+                        "\n \n" + ChatColor.AQUA + "Extra Rechte:\n" + perms + "\n ");
             }
             else {
                 //Load all permissions of the targeted player
+                if (Main.getInstance().getPermissionManager().getPlayerExtraPermissions(target).isEmpty()) perms = "Keine Rechte gefunden!";
                 for (String perm : Main.getInstance().getPermissionManager().getPlayerExtraPermissions(target)) {
                     perms += "- " + perm + "\n";
                 }
@@ -355,7 +356,7 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                 }
 
                 //Send message to sender
-                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Der Rank '" + PlayerRank.fromUnknownInput(args[3]).getFullRankName() + "' wurde erfolgreich dem Spieler '" + target.getName() + "' verliehen!");
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Der Rank " + PlayerRank.fromUnknownInput(args[3]).getColoredName() + ChatColor.GREEN + " wurde erfolgreich dem Spieler '" + target.getName() + "' verliehen!");
                 else sender.sendMessage(CommandUtils.getConsolePrefix() + "Der Rank '" + PlayerRank.fromUnknownInput(args[3]).getFullRankName() + "' wurde erfolgreich dem Spieler '" + target.getName() + "' verliehen!");
 
                 break;
@@ -416,17 +417,19 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
 
             //If the sender is a player
             if (isPlayer) {
-                //Load all permissions of the targeted player
+                //Load all permissions of the targeted rank
+                if (Main.getInstance().getPermissionManager().getRankPermissions(target).isEmpty()) perms = ChatColor.DARK_PURPLE.toString() + ChatColor.ITALIC + "Keine Rechte gefunden!";
                 for (String perm : Main.getInstance().getPermissionManager().getRankPermissions(target)) {
                     perms += ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + perm + "\n";
                 }
 
                 //Send message to sender
-                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.AQUA + "Rank Information von '" + target.getFullRankName() + "'" +
+                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.AQUA + "Rank Information von " + target.getColoredName() +
                         ChatColor.GRAY + ":\n \n" + ChatColor.AQUA + "Rank Rechte:\n" + perms + "\n ");
             }
             else {
-                //Load all permissions of the targeted player
+                //Load all permissions of the targeted rank
+                if (Main.getInstance().getPermissionManager().getRankPermissions(target).isEmpty()) perms = "Keine Rechte gefunden!";
                 for (String perm : Main.getInstance().getPermissionManager().getRankPermissions(target)) {
                     perms += "- " + perm + "\n";
                 }
@@ -469,7 +472,7 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                 }
 
                 //Send message to sender
-                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Das Recht '" + args[3] + "' wurde dem Rank '" + target.getFullRankName() + "' zugeordnet!");
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Das Recht '" + args[3] + "' wurde dem Rank " + target.getColoredName() + ChatColor.GREEN + " zugeordnet!");
                 else sender.sendMessage(CommandUtils.getConsolePrefix() + "Das Recht '" + args[3] + "' wurde dem Rank '" + target.getFullRankName() + "' zugeordnet!");
 
                 break;
@@ -499,7 +502,7 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                 }
 
                 //Send message to sender
-                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Das Recht '" + args[3] + "' wurde dem Rank '" + target.getFullRankName() + "' entfernt!");
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Das Recht '" + args[3] + "' wurde dem Rank " + target.getColoredName() + ChatColor.GREEN + " entfernt!");
                 else sender.sendMessage(CommandUtils.getConsolePrefix() + "Das Recht '" + args[3] + "' wurde dem Rank '" + target.getFullRankName() + "' entfernt!");
 
                 break;

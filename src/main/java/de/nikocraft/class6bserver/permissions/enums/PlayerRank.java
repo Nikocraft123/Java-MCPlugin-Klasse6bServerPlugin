@@ -2,15 +2,21 @@
 package de.nikocraft.class6bserver.permissions.enums;
 
 
+//IMPORTS
+
+//Bukkit
+import org.bukkit.ChatColor;
+
+
 //PLAYER PERMISSION RANK ENUM
 public enum PlayerRank {
 
     //ENUMS
-    Guest("guest", 0),
-    Player("player", 1),
-    VIP("vip", 2),
-    Operator("op", 3),
-    Admin("admin", 4);
+    Guest("guest", 0, ChatColor.GRAY),
+    Default("default", 1, ChatColor.YELLOW),
+    VIP("vip", 2, ChatColor.GREEN),
+    Operator("op", 3, ChatColor.GOLD),
+    Admin("admin", 4, ChatColor.RED);
 
 
     //VARIABLES
@@ -24,13 +30,17 @@ public enum PlayerRank {
     //The full name of the rank
     private final String fullRankName;
 
+    //The color of the rank
+    private final ChatColor color;
+
 
     //CONSTRUCTOR
-    PlayerRank(String rankName, int rankId) {
+    PlayerRank(String rankName, int rankId, ChatColor color) {
 
         //Set variables
         this.rankName = rankName;
         this.rankId = rankId;
+        this.color = color;
         this.fullRankName = name();
 
     }
@@ -71,9 +81,6 @@ public enum PlayerRank {
             if (rank.getRankId() == rankId) return rank;
         }
 
-        //Log Error
-        //TODO
-
         //Return guest rank
         return PlayerRank.Guest;
 
@@ -87,9 +94,6 @@ public enum PlayerRank {
             //If the rank founded, return it
             if (rank.getRankName().equals(rankName)) return rank;
         }
-
-        //Log Error
-        //TODO
 
         //Return guest rank
         return PlayerRank.Guest;
@@ -105,12 +109,17 @@ public enum PlayerRank {
             if (rank.getFullRankName().equals(fullRankName)) return rank;
         }
 
-        //Log Error
-        //TODO
-
         //Return guest rank
         return PlayerRank.Guest;
 
+    }
+
+
+    //METHODS
+
+    //Get colored full name of the rank
+    public String getColoredName() {
+        return getColor() + getFullRankName();
     }
 
 
@@ -126,8 +135,14 @@ public enum PlayerRank {
         return rankId;
     }
 
+    //The full name of the rank
     public String getFullRankName() {
         return fullRankName;
+    }
+
+    //The color of the rank
+    public ChatColor getColor() {
+        return color;
     }
 
 }
