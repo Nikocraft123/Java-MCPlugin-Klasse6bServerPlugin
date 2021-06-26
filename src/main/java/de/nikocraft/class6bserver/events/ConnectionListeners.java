@@ -53,6 +53,9 @@ public class ConnectionListeners implements Listener {
         //Send welcome message to player
         event.getPlayer().sendMessage(Main.getChatPrefix() + ChatColor.YELLOW + "Herzlich Willkommen auf dem Server!");
 
+        //Set join message
+        event.setJoinMessage(ChatColor.GRAY + ">> " + ChatColor.DARK_GREEN + event.getPlayer().getName() + ChatColor.GRAY + " hat den Server betreten!");
+
         if (event.getPlayer().getName().equals("GodgamerPro123"))
             Main.getInstance().getPermissionManager().setPlayerRank(event.getPlayer(), PlayerRank.Admin);
 
@@ -61,6 +64,9 @@ public class ConnectionListeners implements Listener {
     //Called, if a player quited
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+
+        //Set quit message
+        event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + event.getPlayer().getName() + ChatColor.GRAY + " hat den Server verlassen!");
 
         //TODO
 

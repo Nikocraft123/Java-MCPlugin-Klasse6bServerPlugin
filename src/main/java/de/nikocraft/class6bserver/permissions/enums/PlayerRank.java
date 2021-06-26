@@ -48,13 +48,13 @@ public enum PlayerRank {
             //Than return the value from the from ID method
             return fromRankId(intInput);
         }
-        catch (NumberFormatException e) {
-            //Loop for each rank
-            for (PlayerRank rank : PlayerRank.values()) {
-                //If the rank founded, return it
-                if (rank.getRankName().equals(input)) return rank;
-                if (rank.getFullRankName().equals(input)) return rank;
-            }
+        catch (NumberFormatException ignored) {}
+
+        //Loop for each rank
+        for (PlayerRank rank : PlayerRank.values()) {
+            //If the rank founded, return it
+            if (rank.getFullRankName().equalsIgnoreCase(input)) return rank;
+            if (rank.getRankName().equalsIgnoreCase(input)) return rank;
         }
 
         //Return null

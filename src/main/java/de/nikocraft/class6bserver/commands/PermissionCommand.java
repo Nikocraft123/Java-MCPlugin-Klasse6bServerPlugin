@@ -133,6 +133,10 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                         result.add("spigot.");
                         result.add("minecraft.");
                         result.add("*");
+                        result.add("server.command.");
+                        result.add("bukkit.command.");
+                        result.add("spigot.command.");
+                        result.add("minecraft.command.");
 
                         break;
                     case "remove":
@@ -229,7 +233,7 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                 }
 
                 //Send message to sender
-                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.AQUA + "Rechteinformation von '" + target.getName() + "'" +
+                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.AQUA + "Rechte Information von '" + target.getName() + "'" +
                         ChatColor.GRAY + ":\n \n" + ChatColor.AQUA + "Rank: " + ChatColor.YELLOW +
                         Main.getInstance().getPermissionManager().getPlayerRank(target).getFullRankName() + "\n \n" +
                         ChatColor.AQUA + "Extra Rechte:\n" + perms + "\n ");
@@ -241,7 +245,7 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                 }
 
                 //Send message to sender
-                sender.sendMessage(CommandUtils.getConsolePrefix() + "Rechteinformation von '" + target.getName() + "':\n \nRank: " +
+                sender.sendMessage(CommandUtils.getConsolePrefix() + "Rechte Information von '" + target.getName() + "':\n \nRank: " +
                         Main.getInstance().getPermissionManager().getPlayerRank(target).getFullRankName() + "\n \nExtra Rechte:\n" + perms + "\n ");
             }
 
@@ -327,7 +331,7 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                 }
 
                 //If the rank doesn't found
-                if (PlayerRank.fromUnknownInput(args[1].toLowerCase()) == null) {
+                if (PlayerRank.fromUnknownInput(args[3]) == null) {
 
                     //Send message to sender
                     if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Ungültiger Rank!");
@@ -339,7 +343,7 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                 }
 
                 //Set the rank of the player (If failed)
-                if (!Main.getInstance().getPermissionManager().setPlayerRank(target, PlayerRank.fromUnknownInput(args[1].toLowerCase()))) {
+                if (!Main.getInstance().getPermissionManager().setPlayerRank(target, PlayerRank.fromUnknownInput(args[3]))) {
 
                     //Send message to sender
                     if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Dieser Spieler hat bereits diesen Rank!");
@@ -351,8 +355,8 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                 }
 
                 //Send message to sender
-                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Der Rank '" + PlayerRank.fromUnknownInput(args[1].toLowerCase()).getFullRankName() + "' wurde erfolgreich dem Spieler '" + target.getName() + "' verliehen!");
-                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Der Rank '" + PlayerRank.fromUnknownInput(args[1].toLowerCase()).getFullRankName() + "' wurde erfolgreich dem Spieler '" + target.getName() + "' verliehen!");
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Der Rank '" + PlayerRank.fromUnknownInput(args[3]).getFullRankName() + "' wurde erfolgreich dem Spieler '" + target.getName() + "' verliehen!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Der Rank '" + PlayerRank.fromUnknownInput(args[3]).getFullRankName() + "' wurde erfolgreich dem Spieler '" + target.getName() + "' verliehen!");
 
                 break;
             default:
@@ -377,9 +381,138 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
         //Is the sender a player
         boolean isPlayer = sender instanceof Player;
 
-        //TEMP
-        //TODO
-        sender.sendMessage("[Noch in Entwicklung]");
+        //If the argument 2 missed
+        if (args.length == 1) {
+
+            //Send message to sender
+            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Zweites Argument vermisst!");
+            else sender.sendMessage(CommandUtils.getConsolePrefix() + "Zweites Argument vermisst!");
+
+            //Return false
+            return false;
+
+        }
+
+        //Get the targeted rank
+        PlayerRank target = PlayerRank.fromUnknownInput(args[1]);
+
+        //If the targeted rank doesn't founded
+        if (target == null) {
+
+            //Send message to sender
+            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Der Rank '" + args[1] + "' existiert nicht!");
+            else sender.sendMessage(CommandUtils.getConsolePrefix() + "Der Rank '" + args[1] + "' existiert nicht!");
+
+            //Return false
+            return false;
+
+        }
+
+        //If only 2 arguments contains
+        if (args.length == 2) {
+
+            //Define string for permissions of the target
+            String perms = "";
+
+            //If the sender is a player
+            if (isPlayer) {
+                //Load all permissions of the targeted player
+                for (String perm : Main.getInstance().getPermissionManager().getRankPermissions(target)) {
+                    perms += ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + perm + "\n";
+                }
+
+                //Send message to sender
+                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.AQUA + "Rank Information von '" + target.getFullRankName() + "'" +
+                        ChatColor.GRAY + ":\n \n" + ChatColor.AQUA + "Rank Rechte:\n" + perms + "\n ");
+            }
+            else {
+                //Load all permissions of the targeted player
+                for (String perm : Main.getInstance().getPermissionManager().getRankPermissions(target)) {
+                    perms += "- " + perm + "\n";
+                }
+
+                //Send message to sender
+                sender.sendMessage(CommandUtils.getConsolePrefix() + "Rank Information von '" + target.getFullRankName() + "':\n \nRank Rechte:\n" + perms + "\n ");
+            }
+
+            //Return true
+            return true;
+
+        }
+
+        //Switch in argument 3
+        switch (args[2].toLowerCase()) {
+
+            case "add":
+                //If the argument 4 missed
+                if (args.length < 4) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Viertes Argument vermisst!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Viertes Argument vermisst!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Add the permission to rank (If failed)
+                if (!Main.getInstance().getPermissionManager().addRankPermission(target, args[3])) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Dieses Recht ist bereits diesem Rank zugeordnet!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Dieses Recht ist bereits diesem Rank zugeordnet!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Das Recht '" + args[3] + "' wurde dem Rank '" + target.getFullRankName() + "' zugeordnet!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Das Recht '" + args[3] + "' wurde dem Rank '" + target.getFullRankName() + "' zugeordnet!");
+
+                break;
+            case "remove":
+                //If the argument 4 missed
+                if (args.length < 4) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Viertes Argument vermisst!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Viertes Argument vermisst!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Remove the permission to rank (If failed)
+                if (!Main.getInstance().getPermissionManager().removeRankPermission(target, args[3])) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Diesem Rank ist dieses Recht nicht zugeordnet!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Diesem Rank ist dieses Recht nicht zugeordnet!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Das Recht '" + args[3] + "' wurde dem Rank '" + target.getFullRankName() + "' entfernt!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Das Recht '" + args[3] + "' wurde dem Rank '" + target.getFullRankName() + "' entfernt!");
+
+                break;
+            default:
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Ungültiges drittes Argument!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Ungültiges drittes Argument!");
+
+                //Return false
+                return false;
+
+        }
 
         //Return true
         return true;
