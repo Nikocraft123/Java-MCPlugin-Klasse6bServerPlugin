@@ -9,7 +9,7 @@ import de.nikocraft.class6bserver.Main;
 
 //Bukkit
 import de.nikocraft.class6bserver.permissions.CustomPermissibleBase;
-import de.nikocraft.class6bserver.ui.ScoreboardManager;
+import de.nikocraft.class6bserver.ui.scoreboards.ScoreboardManager;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;
@@ -58,6 +58,10 @@ public class ConnectionListeners implements Listener {
 
         //Add a scoreboard manager to the player
         new ScoreboardManager(event.getPlayer());
+
+        //Set the tablist of the player
+        Main.getInstance().getTablistManager().setTablist(event.getPlayer());
+        Main.getInstance().getTablistManager().setPlayerTeams(event.getPlayer());
 
     }
 

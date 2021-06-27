@@ -8,6 +8,7 @@ package de.nikocraft.class6bserver;
 import de.nikocraft.class6bserver.commands.PermissionCommand;
 import de.nikocraft.class6bserver.events.ConnectionListeners;
 import de.nikocraft.class6bserver.permissions.PermissionManager;
+import de.nikocraft.class6bserver.ui.tablists.TablistManager;
 import de.nikocraft.class6bserver.utils.Config;
 
 //Bukkit
@@ -26,6 +27,9 @@ public final class Main extends JavaPlugin {
 
     //The permission manager of the permission system
     private PermissionManager permissionManager;
+
+    //The tablist manager of the server
+    private TablistManager tablistManager;
 
     //The master configuration of the plugin
     private Config masterConfig;
@@ -60,8 +64,11 @@ public final class Main extends JavaPlugin {
         //Register commands
         getCommand("permission").setExecutor(new PermissionCommand());
 
-        //Define permission manage
+        //Define permission manager
         permissionManager = new PermissionManager();
+
+        //Define tablist manager
+        tablistManager = new TablistManager();
 
     }
 
@@ -106,6 +113,11 @@ public final class Main extends JavaPlugin {
     //The permission manager of the permission system
     public PermissionManager getPermissionManager() {
         return permissionManager;
+    }
+
+    //The tablist manager of the server
+    public TablistManager getTablistManager() {
+        return tablistManager;
     }
 
     //The master configuration of the plugin

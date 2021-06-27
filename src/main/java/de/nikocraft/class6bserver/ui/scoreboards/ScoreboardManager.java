@@ -1,12 +1,11 @@
 //PACKAGE
-package de.nikocraft.class6bserver.ui;
+package de.nikocraft.class6bserver.ui.scoreboards;
 
 
 //IMPORTS
 
 //Nikocraft
 import de.nikocraft.class6bserver.Main;
-import de.nikocraft.class6bserver.ui.scoreboards.MainLobbyScoreboard;
 
 //Bukkit
 import org.bukkit.Bukkit;

@@ -6,7 +6,6 @@ package de.nikocraft.class6bserver.ui.scoreboards;
 
 //Nikocraft
 import de.nikocraft.class6bserver.Main;
-import de.nikocraft.class6bserver.ui.ScoreboardBuilder;
 
 //Bukkit
 import org.bukkit.Bukkit;
@@ -94,23 +93,22 @@ public class MainLobbyScoreboard extends ScoreboardBuilder {
     //Update scores of the scoreboard
     private void updateScores() {
 
-        //Remove old scores
-        removeScore(score13);
-        removeScore(score5);
-        removeScore(score3);
-        removeScore(score2);
-
         //Update scoreboard scores
+        removeScore(score13);
         score13 = ChatColor.AQUA.toString() + ChatColor.ITALIC + "Dein Rank:" + ChatColor.RESET + " " + Main.getInstance().getPermissionManager().getPlayerRank(getPlayer()).getColoredName();
-        if (time % 8 <= 4) score5 = ChatColor.DARK_RED.toString() + ChatColor.BOLD + " Vorsicht BETA Server!";
-        else score5 = ChatColor.RED.toString() + ChatColor.BOLD + " Vorsicht BETA Server!";
-        score3 = ChatColor.AQUA.toString() + ChatColor.ITALIC + "Aktive Spieler:" + ChatColor.GOLD + " " + Bukkit.getOnlinePlayers().size();
-        score2 = ChatColor.AQUA.toString() + ChatColor.ITALIC + "Erreichte Ziele:" + ChatColor.GOLD + " " + 0;
-
-        //Set the updated scores
         setScore(score13, 13);
+
+        removeScore(score5);
+        if (time % 8 <= 3) score5 = ChatColor.DARK_RED.toString() + ChatColor.BOLD + " Vorsicht BETA Server!";
+        else score5 = ChatColor.RED.toString() + ChatColor.BOLD + " Vorsicht BETA Server!";
         setScore(score5, 5);
+
+        removeScore(score3);
+        score3 = ChatColor.AQUA.toString() + ChatColor.ITALIC + "Aktive Spieler:" + ChatColor.GOLD + " " + Bukkit.getOnlinePlayers().size();
         setScore(score3, 3);
+
+        removeScore(score2);
+        score2 = ChatColor.AQUA.toString() + ChatColor.ITALIC + "Erreichte Ziele:" + ChatColor.GOLD + " " + 0;
         setScore(score2, 2);
 
     }

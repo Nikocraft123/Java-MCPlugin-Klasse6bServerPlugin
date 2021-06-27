@@ -1,5 +1,5 @@
 //PACKAGE
-package de.nikocraft.class6bserver.ui;
+package de.nikocraft.class6bserver.ui.scoreboards;
 
 
 //IMPORTS
