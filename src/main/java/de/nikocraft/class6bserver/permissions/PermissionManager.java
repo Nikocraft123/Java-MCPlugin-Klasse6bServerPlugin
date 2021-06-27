@@ -171,6 +171,9 @@ public class PermissionManager {
         //Save the configuration to update changes
         config.save();
 
+        //Update the tablist
+        Main.getInstance().getTablistManager().setAllPlayerTeams();
+
         //Return true
         return true;
 

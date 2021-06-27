@@ -61,7 +61,7 @@ public class ConnectionListeners implements Listener {
 
         //Set the tablist of the player
         Main.getInstance().getTablistManager().setTablist(event.getPlayer());
-        Main.getInstance().getTablistManager().setPlayerTeams(event.getPlayer());
+        Main.getInstance().getTablistManager().setAllPlayerTeams();
 
     }
 

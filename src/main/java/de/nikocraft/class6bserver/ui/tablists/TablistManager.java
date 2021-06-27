@@ -42,35 +42,54 @@ public class TablistManager {
 
     }
 
-    //Set a player teams
+    //Set all player teams
+    public void setAllPlayerTeams() {
+
+        //Set for each online player the teams
+        Bukkit.getOnlinePlayers().forEach(this::setPlayerTeams);
+
+    }
+
+    //Set player teams
     public void setPlayerTeams(Player player) {
 
         //Get the scoreboard of the player
         Scoreboard scoreboard = player.getScoreboard();
 
         //Get all rank teams
-        Team guests = scoreboard.getTeam("guests");
-        Team defaults = scoreboard.getTeam("defaults");
-        Team vips = scoreboard.getTeam("vips");
-        Team ops = scoreboard.getTeam("ops");
-        Team admins = scoreboard.getTeam("admins");
+        Team guests = scoreboard.getTeam("4guests");
+        Team defaults = scoreboard.getTeam("3defaults");
+        Team vips = scoreboard.getTeam("2vips");
+        Team ops = scoreboard.getTeam("1ops");
+        Team admins = scoreboard.getTeam("0admins");
 
         //If a team doesn't exist, register it
-        if (guests == null) guests = scoreboard.registerNewTeam("guests");
-        if (defaults == null) defaults = scoreboard.registerNewTeam("defaults");
-        if (vips == null) vips = scoreboard.registerNewTeam("vips");
-        if (ops == null) ops = scoreboard.registerNewTeam("ops");
-        if (admins == null) admins = scoreboard.registerNewTeam("admins");
+        if (guests == null) guests = scoreboard.registerNewTeam("4guests");
+        if (defaults == null) defaults = scoreboard.registerNewTeam("3defaults");
+        if (vips == null) vips = scoreboard.registerNewTeam("2vips");
+        if (ops == null) ops = scoreboard.registerNewTeam("1ops");
+        if (admins == null) admins = scoreboard.registerNewTeam("0admins");
 
         //Set the prefix of all teams
-        admins.setPrefix(ChatColor.RED + "Admin" + ChatColor.GRAY + " | ");
-        admins.setColor(ChatColor.RED);
+        admins.setPrefix(PlayerRank.Admin.getColor() + "Admin" + ChatColor.GRAY + " | ");
+        admins.setColor(PlayerRank.Admin.getColor());
+        ops.setPrefix(PlayerRank.Operator.getColor() + "Operator" + ChatColor.GRAY + " | ");
+        ops.setColor(PlayerRank.Operator.getColor());
+        vips.setPrefix(PlayerRank.VIP.getColor() + "VIP" + ChatColor.GRAY + " | ");
+        vips.setColor(PlayerRank.VIP.getColor());
+        defaults.setPrefix(PlayerRank.Default.getColor() + "Default" + ChatColor.GRAY + " | ");
+        defaults.setColor(PlayerRank.Default.getColor());
+        guests.setPrefix(PlayerRank.Guest.getColor() + "Guest" + ChatColor.GRAY + " | ");
+        guests.setColor(PlayerRank.Guest.getColor());
         
         //For in all online players
         for (Player target : Bukkit.getOnlinePlayers()) {
 
             if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.Admin) admins.addEntry(target.getName());
-            else ops.addEntry(target.getName());
+            if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.Operator) ops.addEntry(target.getName());
+            if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.VIP) vips.addEntry(target.getName());
+            if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.Default) defaults.addEntry(target.getName());
+            if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.Guest) guests.addEntry(target.getName());
 
         }
 

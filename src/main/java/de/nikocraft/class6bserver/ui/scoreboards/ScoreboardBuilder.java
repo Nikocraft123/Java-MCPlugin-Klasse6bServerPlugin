@@ -4,6 +4,9 @@ package de.nikocraft.class6bserver.ui.scoreboards;
 
 //IMPORTS
 
+//Nikocraft
+import de.nikocraft.class6bserver.ui.scoreboards.enums.EntryName;
+
 //Bukkit
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 
 //ABSTRACT SCOREBOARD BUILDER CLASS
@@ -78,16 +82,98 @@ public abstract class ScoreboardBuilder {
 
     }
 
-    //Set a score of the scoreboard
-    public void setScore(String content, int score) {
+    //Set a score of the scoreboard, that is fix
+    public void setFixScore(String content, int score) {
+
+        //Set the score
         objective.getScore(content).setScore(score);
+
+    }
+
+    //Set a score of the scoreboard, that can update
+    public void setUpdateScore(String content, int score, int updateScore) {
+
+        //Get the team from score
+        Team team = getTeam(updateScore);
+
+        //If the team doesn't found, return
+        if (team == null) return;
+
+        //Set the prefix of the team to the content
+        team.setPrefix(content);
+
+        //Show the score
+        showScore(score, updateScore);
+
     }
 
     //Remove a score from the scoreboard
-    public void removeScore(String content) {
-        scoreboard.resetScores(content);
+    public void removeScore(int score) {
+
+        //Hide the score
+        hideScore(score);
+
     }
 
+    //Show a score
+    private void showScore(int score, int updateScore) {
+
+        //Get the entry name
+        EntryName name = EntryName.fromScore(updateScore);
+
+        //If the entry doesn't found, return
+        if (name == null) return;
+
+        //If the score has an entry with this name, return
+        if (objective.getScore(name.getName()).isScoreSet()) return;
+
+        //Set the score
+        objective.getScore(name.getName()).setScore(score);
+
+    }
+
+    //Hide a score
+    private void hideScore(int score) {
+
+        //Get the entry name
+        EntryName name = EntryName.fromScore(score);
+
+        //If the entry doesn't found, return
+        if (name == null) return;
+
+        //If the score hasn't an entry with this name, return
+        if (!objective.getScore(name.getName()).isScoreSet()) return;
+
+        //Reset the score
+        scoreboard.resetScores(name.getName());
+
+    }
+
+    //Get a team by an score
+    private Team getTeam(int score) {
+
+        //Get entry with the score
+        EntryName entryName = EntryName.fromScore(score);
+
+        //Return null, if the entry name is null
+        if (entryName == null) return null;
+
+        //Get the team with the entry name
+        Team team = scoreboard.getEntryTeam(entryName.getName());
+
+        //If the team founded, return it
+        if (team != null) return team;
+
+        //Register a new team
+        team = scoreboard.registerNewTeam(entryName.name());
+
+        //Add the entry to the team
+        team.addEntry(entryName.getName());
+
+        //Return the new team
+        return team;
+
+    }
 
     //GETTERS
 
