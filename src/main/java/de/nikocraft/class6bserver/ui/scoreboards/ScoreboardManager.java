@@ -11,30 +11,27 @@ import de.nikocraft.class6bserver.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+//Java
+import java.util.HashMap;
+
 
 //SCOREBOARD MANAGER CLASS
 public class ScoreboardManager {
 
     //VARIABLES
 
-    //The owner player of the scoreboard manager
-    private final Player player;
-
-    //The main lobby scoreboard
-    private MainLobbyScoreboard mainLobbyScoreboard;
+    //The map with all players and there active scoreboard
+    private HashMap<Player, ScoreboardBuilder> playerScoreboards;
 
     //The manager scheduler ID
     private int runID;
 
 
     //CONSTRUCTOR
-    public ScoreboardManager(Player player) {
+    public ScoreboardManager() {
 
-        //Set the player
-        this.player = player;
-
-        //Create a new main lobby scoreboard for the player
-        mainLobbyScoreboard = new MainLobbyScoreboard(player);
+        //Create the player scoreboard map
+        playerScoreboards = new HashMap<>();
 
         //Run the manager
         run();
@@ -54,16 +51,47 @@ public class ScoreboardManager {
             @Override
             public void run() {
 
-                //If the player is offline, close the scheduler
-                if (!player.isOnline()) Bukkit.getScheduler().cancelTask(runID);
+                //Loop for all players in the map
+                for (Player player : playerScoreboards.keySet()) {
 
-                //Update the scoreboard
-                mainLobbyScoreboard.update();
+                    //If the player is online
+                    if (player.isOnline()) {
+
+                        //Update the scoreboard of the player
+                        playerScoreboards.get(player).update();
+
+                    }
+                    //Else, Remove the player and his scoreboard
+                    else playerScoreboards.remove(player);
+
+                }
 
             }
 
         }, 4, 4);
 
     }
+
+    //Set the scoreboard of a player
+    public void setPlayerScoreboard(Player player, ScoreboardBuilder scoreboard) {
+
+        //Put the player in the map
+        playerScoreboards.put(player, scoreboard);
+
+    }
+
+    //Get a scoreboard of a player
+    public ScoreboardBuilder getPlayerScoreboard(Player player) {
+
+        //Return the scoreboard of the player
+        return playerScoreboards.get(player);
+
+    }
+
+
+    //GETTERS
+
+    //The manager scheduler ID
+    public int getRunID() { return runID; }
 
 }

@@ -9,7 +9,7 @@ import de.nikocraft.class6bserver.Main;
 
 //Bukkit
 import de.nikocraft.class6bserver.permissions.CustomPermissibleBase;
-import de.nikocraft.class6bserver.ui.scoreboards.ScoreboardManager;
+import de.nikocraft.class6bserver.ui.scoreboards.MainLobbyScoreboard;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;
@@ -51,16 +51,19 @@ public class ConnectionListeners implements Listener {
     public void onJoin(PlayerJoinEvent event) {
 
         //Send welcome message to player
-        event.getPlayer().sendMessage(Main.getChatPrefix() + ChatColor.YELLOW + "Herzlich Willkommen auf dem Server!");
+        event.getPlayer().sendMessage(Main.getChatPrefix() + ChatColor.YELLOW + ChatColor.UNDERLINE + "Herzlich Willkommen auf dem Server der Klasse 6b!\n" +
+                ChatColor.YELLOW + " \nGebe '/info' in den Chat ein, um mehr Hilfe zu erhalten!\nMit Tab kannst du sehen, wer alles gerade online ist.\n \n" +
+                ChatColor.BLUE + ChatColor.BOLD + "Viel Spaß und Erfolg!\n" + ChatColor.GRAY + " - " + ChatColor.DARK_PURPLE + ChatColor.ITALIC + "Die Serververwaltung [Reik, Till, Nikolas]\n ");
 
         //Set join message
-        event.setJoinMessage(ChatColor.GRAY + ">> " + ChatColor.DARK_GREEN + ChatColor.BOLD + event.getPlayer().getName() + ChatColor.RESET + ChatColor.GRAY + " hat den Server betreten!");
+        event.setJoinMessage(ChatColor.GRAY + ">> " + ChatColor.DARK_GREEN + ChatColor.BOLD + event.getPlayer().getName() +
+                ChatColor.RESET + ChatColor.GRAY + " hat den Server betreten!");
 
-        //Add a scoreboard manager to the player
-        new ScoreboardManager(event.getPlayer());
+        //Add the player to the scoreboard manager
+        Main.getInstance().getScoreboardManager().setPlayerScoreboard(event.getPlayer(), new MainLobbyScoreboard(event.getPlayer()));
 
         //Set the tablist of the player
-        Main.getInstance().getTablistManager().setTablist(event.getPlayer());
+        Main.getInstance().getTablistManager().setTablistHeaderFooter(event.getPlayer());
         Main.getInstance().getTablistManager().setAllPlayerTeams();
 
     }
@@ -70,7 +73,8 @@ public class ConnectionListeners implements Listener {
     public void onQuit(PlayerQuitEvent event) {
 
         //Set quit message
-        event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + ChatColor.BOLD + event.getPlayer().getName() + ChatColor.RESET + ChatColor.GRAY + " hat den Server verlassen!");
+        event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + ChatColor.BOLD + event.getPlayer().getName() +
+                ChatColor.RESET + ChatColor.GRAY + " hat den Server verlassen!");
 
         //TODO
 

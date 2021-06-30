@@ -23,8 +23,8 @@ public class TablistManager {
 
     //METHODS
 
-    //Set the tablist of a new player
-    public void setTablist(Player player) {
+    //Set the header and footer of the tablist of a new player
+    public void setTablistHeaderFooter(Player player) {
 
         //Create string for server ip
         String ip;
@@ -33,12 +33,14 @@ public class TablistManager {
         try { ip = InetAddress.getLocalHost().getHostAddress(); }
         catch (UnknownHostException e) { ip = "Unknown Ip Address"; }
 
-
-        //Set the Header of the tablist
-        player.setPlayerListHeaderFooter(ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "          " + ChatColor.GRAY +
+        //Set the header of the tablist
+        player.setPlayerListHeader(ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "          " + ChatColor.GRAY +
                 " [ " + ChatColor.GOLD + ChatColor.BOLD + "KLASSEN SERVER 6B" + ChatColor.GRAY + " ] " + ChatColor.DARK_GRAY +
                 ChatColor.STRIKETHROUGH + "          " + ChatColor.RESET + "\n" +
-                ChatColor.RED + ChatColor.BOLD + "!Vorsicht Beta Server!" + ChatColor.RESET + "\n","\n" + ChatColor.DARK_PURPLE + "Server IP: " + ChatColor.ITALIC + ip);
+                ChatColor.RED + ChatColor.BOLD + "!Vorsicht BETA Server!" + ChatColor.RESET + "\n");
+
+        //Set the footer of the tablist
+        player.setPlayerListFooter("\n" + ChatColor.DARK_PURPLE + "Server IP: " + ChatColor.ITALIC + ip);
 
     }
 
@@ -46,7 +48,7 @@ public class TablistManager {
     public void setAllPlayerTeams() {
 
         //Set for each online player the teams
-        Bukkit.getOnlinePlayers().forEach(this::setPlayerTeams);
+        for (Player player : Bukkit.getOnlinePlayers()) setPlayerTeams(player);
 
     }
 
@@ -56,40 +58,26 @@ public class TablistManager {
         //Get the scoreboard of the player
         Scoreboard scoreboard = player.getScoreboard();
 
-        //Get all rank teams
-        Team guests = scoreboard.getTeam("4guests");
-        Team defaults = scoreboard.getTeam("3defaults");
-        Team vips = scoreboard.getTeam("2vips");
-        Team ops = scoreboard.getTeam("1ops");
-        Team admins = scoreboard.getTeam("0admins");
+        //For in all player ranks
+        for (PlayerRank rank : PlayerRank.values()) {
 
-        //If a team doesn't exist, register it
-        if (guests == null) guests = scoreboard.registerNewTeam("4guests");
-        if (defaults == null) defaults = scoreboard.registerNewTeam("3defaults");
-        if (vips == null) vips = scoreboard.registerNewTeam("2vips");
-        if (ops == null) ops = scoreboard.registerNewTeam("1ops");
-        if (admins == null) admins = scoreboard.registerNewTeam("0admins");
+            //Get the team from rank
+            Team team = scoreboard.getTeam(rank.getRankId() + rank.getRankName());
 
-        //Set the prefix of all teams
-        admins.setPrefix(PlayerRank.Admin.getColor() + "Admin" + ChatColor.GRAY + " | ");
-        admins.setColor(PlayerRank.Admin.getColor());
-        ops.setPrefix(PlayerRank.Operator.getColor() + "Operator" + ChatColor.GRAY + " | ");
-        ops.setColor(PlayerRank.Operator.getColor());
-        vips.setPrefix(PlayerRank.VIP.getColor() + "VIP" + ChatColor.GRAY + " | ");
-        vips.setColor(PlayerRank.VIP.getColor());
-        defaults.setPrefix(PlayerRank.Default.getColor() + "Default" + ChatColor.GRAY + " | ");
-        defaults.setColor(PlayerRank.Default.getColor());
-        guests.setPrefix(PlayerRank.Guest.getColor() + "Guest" + ChatColor.GRAY + " | ");
-        guests.setColor(PlayerRank.Guest.getColor());
-        
-        //For in all online players
-        for (Player target : Bukkit.getOnlinePlayers()) {
+            //If the team doesn't exist, register it
+            if (team == null) team = scoreboard.registerNewTeam(rank.getRankId() + rank.getRankName());
 
-            if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.Admin) admins.addEntry(target.getName());
-            if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.Operator) ops.addEntry(target.getName());
-            if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.VIP) vips.addEntry(target.getName());
-            if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.Default) defaults.addEntry(target.getName());
-            if (Main.getInstance().getPermissionManager().getPlayerRank(target) == PlayerRank.Guest) guests.addEntry(target.getName());
+            //Set the prefix of the team
+            team.setPrefix(ChatColor.GRAY + "[" + rank.getColoredName() + ChatColor.GRAY + "] ");
+
+            //Set the color of the team
+            team.setColor(rank.getColor());
+
+            //Loop for all online players
+            for (Player target : Bukkit.getOnlinePlayers()) {
+                //If the rank of the target is equals the current team, add it
+                if (Main.getInstance().getPermissionManager().getPlayerRank(target) == rank) team.addEntry(target.getName());
+            }
 
         }
 

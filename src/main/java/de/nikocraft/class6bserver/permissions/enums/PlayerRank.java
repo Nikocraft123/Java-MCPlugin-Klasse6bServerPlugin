@@ -12,11 +12,11 @@ import org.bukkit.ChatColor;
 public enum PlayerRank {
 
     //ENUMS
-    Guest("guest", 0, ChatColor.GRAY),
-    Default("default", 1, ChatColor.YELLOW),
+    Guest("guest", 4, ChatColor.GRAY),
+    Default("default", 3, ChatColor.YELLOW),
     VIP("vip", 2, ChatColor.GREEN),
-    Operator("op", 3, ChatColor.GOLD),
-    Admin("admin", 4, ChatColor.RED);
+    Operator("op", 1, ChatColor.GOLD),
+    Admin("admin", 0, ChatColor.RED);
 
 
     //VARIABLES

@@ -23,14 +23,14 @@ public class MainLobbyScoreboard extends ScoreboardBuilder {
     //VARIABLES
 
     //The current scoreboard update time
-    private int time = 0;
+    private int updateTime = 0;
 
 
     //CONSTRUCTOR
     public MainLobbyScoreboard(Player player) {
 
         //Initialize the scoreboard
-        super(player, "   Klasse 6b - Hauptlobby   ");
+        super(player, "   HAUPTLOBBY   ", 15);
 
     }
 
@@ -42,22 +42,22 @@ public class MainLobbyScoreboard extends ScoreboardBuilder {
     public void create() {
 
         //Build scoreboard scores
-        setFixScore("", 14);
-        setUpdateScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Dein Rank:" + ChatColor.RESET + " " + Main.getInstance().getPermissionManager().getPlayerRank(getPlayer()).getColoredName(), 13, 0);
-        setFixScore(" ", 12);
-        setFixScore(ChatColor.YELLOW + " Herzlich Willkommen auf dem ", 11);
-        setFixScore(ChatColor.YELLOW + " Server der Klasse 6b!       ", 10);
-        setFixScore("  ", 9);
-        setFixScore(ChatColor.YELLOW + " Für Hilfe, gebe '/info' in  ", 8);
-        setFixScore(ChatColor.YELLOW + " den Chat ein. Viel Spaß!    ", 7);
-        setFixScore("   ", 6);
-        setUpdateScore(ChatColor.DARK_RED.toString() + ChatColor.BOLD + " Vorsicht BETA Server!", 5, 1);
-        setFixScore("    ", 4);
-        setUpdateScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Aktive Spieler:" + ChatColor.GOLD + " " + Bukkit.getOnlinePlayers().size(), 3, 2);
-        setUpdateScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Erreichte Ziele:" + ChatColor.GOLD + " " + 0, 2, 3);
-        setFixScore("     ", 1);
-        try { setFixScore(ChatColor.DARK_PURPLE + InetAddress.getLocalHost().getHostAddress(), 0); }
-        catch (UnknownHostException e) { e.printStackTrace(); }
+        setScore("", 14);
+        setScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Dein Rank:" + ChatColor.RESET + " " + Main.getInstance().getPermissionManager().getPlayerRank(getPlayer()).getColoredName(), 13);
+        setScore("", 12);
+        setScore(ChatColor.YELLOW + " Herzlich Willkommen auf dem ", 11);
+        setScore(ChatColor.YELLOW + " Server der Klasse 6b!       ", 10);
+        setScore("", 9);
+        setScore(ChatColor.YELLOW + " Für Hilfe, gebe '/info' in  ", 8);
+        setScore(ChatColor.YELLOW + " den Chat ein. Viel Spaß!    ", 7);
+        setScore("", 6);
+        setScore(ChatColor.DARK_RED.toString() + ChatColor.BOLD + " !Vorsicht BETA Server!", 5);
+        setScore("", 4);
+        setScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Aktive Spieler:" + ChatColor.GOLD + " " + Bukkit.getOnlinePlayers().size(), 3);
+        setScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Erreichte Ziele:" + ChatColor.GOLD + " " + 0, 2);
+        setScore("", 1);
+        try { setScore(ChatColor.DARK_PURPLE + "Server IP: " + ChatColor.ITALIC + InetAddress.getLocalHost().getHostAddress(), 0); }
+        catch (UnknownHostException e) { setScore(ChatColor.DARK_PURPLE + "Server IP: " + ChatColor.ITALIC + "Unknown Ip Address", 0); }
 
     }
 
@@ -66,14 +66,14 @@ public class MainLobbyScoreboard extends ScoreboardBuilder {
     public void update() {
 
         //Update scoreboard display name
-        updateDisplayName(time);
+        updateDisplayName(updateTime);
 
         //Update scores of the scoreboard
         updateScores();
 
         //Update time
-        if (time >= 16) time = 0;
-        time++;
+        if (updateTime >= 16) updateTime = 0;
+        updateTime++;
 
     }
 
@@ -84,11 +84,11 @@ public class MainLobbyScoreboard extends ScoreboardBuilder {
     private void updateScores() {
 
         //Update scoreboard scores
-        setUpdateScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Dein Rank:" + ChatColor.RESET + " " + Main.getInstance().getPermissionManager().getPlayerRank(getPlayer()).getColoredName(), 13, 0);
-        if (time % 8 <= 3) setUpdateScore(ChatColor.DARK_RED.toString() + ChatColor.BOLD + " Vorsicht BETA Server!", 5, 1);
-        else setUpdateScore(ChatColor.DARK_RED.toString() + ChatColor.BOLD + " Vorsicht BETA Server!", 5, 2);
-        setUpdateScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Aktive Spieler:" + ChatColor.GOLD + " " + Bukkit.getOnlinePlayers().size(), 3, 2);
-        setUpdateScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Erreichte Ziele:" + ChatColor.GOLD + " " + 0, 2, 3);
+        updateScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Dein Rank:" + ChatColor.RESET + " " + Main.getInstance().getPermissionManager().getPlayerRank(getPlayer()).getColoredName(), 13);
+        if (updateTime % 8 <= 3) updateScore(ChatColor.DARK_RED.toString() + ChatColor.BOLD + " !Vorsicht BETA Server!", 5);
+        else updateScore(ChatColor.RED.toString() + ChatColor.BOLD + " !Vorsicht BETA Server!", 5);
+        updateScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Aktive Spieler:" + ChatColor.GOLD + " " + Bukkit.getOnlinePlayers().size(), 3);
+        updateScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Erreichte Ziele:" + ChatColor.GOLD + " " + 0, 2);
 
     }
 

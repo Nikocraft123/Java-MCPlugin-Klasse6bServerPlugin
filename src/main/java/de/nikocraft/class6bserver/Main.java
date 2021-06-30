@@ -8,6 +8,7 @@ package de.nikocraft.class6bserver;
 import de.nikocraft.class6bserver.commands.PermissionCommand;
 import de.nikocraft.class6bserver.events.ConnectionListeners;
 import de.nikocraft.class6bserver.permissions.PermissionManager;
+import de.nikocraft.class6bserver.ui.scoreboards.ScoreboardManager;
 import de.nikocraft.class6bserver.ui.tablists.TablistManager;
 import de.nikocraft.class6bserver.utils.Config;
 
@@ -27,6 +28,9 @@ public final class Main extends JavaPlugin {
 
     //The permission manager of the permission system
     private PermissionManager permissionManager;
+
+    //The scoreboard manager of the server
+    private ScoreboardManager scoreboardManager;
 
     //The tablist manager of the server
     private TablistManager tablistManager;
@@ -67,6 +71,9 @@ public final class Main extends JavaPlugin {
         //Define permission manager
         permissionManager = new PermissionManager();
 
+        //Define scoreboard manager
+        scoreboardManager = new ScoreboardManager();
+
         //Define tablist manager
         tablistManager = new TablistManager();
 
@@ -106,28 +113,21 @@ public final class Main extends JavaPlugin {
     //GETTERS
 
     //The instance of the main
-    public static Main getInstance() {
-        return instance;
-    }
+    public static Main getInstance() { return instance; }
 
     //The permission manager of the permission system
-    public PermissionManager getPermissionManager() {
-        return permissionManager;
-    }
+    public PermissionManager getPermissionManager() { return permissionManager; }
+
+    //The scoreboard manager of the server
+    public ScoreboardManager getScoreboardManager() { return scoreboardManager; }
 
     //The tablist manager of the server
-    public TablistManager getTablistManager() {
-        return tablistManager;
-    }
+    public TablistManager getTablistManager() { return tablistManager; }
 
     //The master configuration of the plugin
-    public Config getMasterConfig() {
-        return masterConfig;
-    }
+    public Config getMasterConfig() { return masterConfig; }
 
     //The permission system configuration
-    public Config getPermissionConfig() {
-        return permissionConfig;
-    }
+    public Config getPermissionConfig() { return permissionConfig; }
 
 }

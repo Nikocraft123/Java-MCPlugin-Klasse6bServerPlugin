@@ -34,9 +34,15 @@ public abstract class ScoreboardBuilder {
     //The display name of the scoreboard
     private String displayName;
 
+    //The array with all scores of the scoreboard
+    private String[] scores;
+
+    //The final empty slot array
+    private final String[] empty_scores;
+
 
     //CONSTRUCTOR
-    public ScoreboardBuilder(Player player, String displayName) {
+    public ScoreboardBuilder(Player player, String displayName, int size) {
 
         //Set the player and display name
         this.player = player;
@@ -56,6 +62,27 @@ public abstract class ScoreboardBuilder {
 
         //Set the display slot of the objective
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        //Create the score array
+        scores = new String[size];
+
+        //Create the empty slot array
+        empty_scores = new String[15];
+        empty_scores[0] = ChatColor.DARK_PURPLE.toString();
+        empty_scores[1] = ChatColor.DARK_GRAY.toString();
+        empty_scores[2] = ChatColor.DARK_GREEN.toString();
+        empty_scores[3] = ChatColor.DARK_AQUA.toString();
+        empty_scores[4] = ChatColor.DARK_BLUE.toString();
+        empty_scores[5] = ChatColor.DARK_RED.toString();
+        empty_scores[6] = ChatColor.LIGHT_PURPLE.toString();
+        empty_scores[7] = ChatColor.GRAY.toString();
+        empty_scores[8] = ChatColor.GOLD.toString();
+        empty_scores[9] = ChatColor.AQUA.toString();
+        empty_scores[10] = ChatColor.YELLOW.toString();
+        empty_scores[11] = ChatColor.RED.toString();
+        empty_scores[12] = ChatColor.BLUE.toString();
+        empty_scores[13] = ChatColor.BLACK.toString();
+        empty_scores[14] = ChatColor.GREEN.toString();
 
         //Create the scoreboard
         create();
@@ -82,127 +109,73 @@ public abstract class ScoreboardBuilder {
 
     }
 
-    //Set a score of the scoreboard, that is fix
-    public void setFixScore(String content, int score) {
+    //Update a score
+    public void updateScore(String score, int slot) {
 
-        //Set the score
-        objective.getScore(content).setScore(score);
+        //Remove the old score
+        removeScore(slot);
 
-    }
-
-    //Set a score of the scoreboard, that can update
-    public void setUpdateScore(String content, int score, int updateScore) {
-
-        //Get the team from score
-        Team team = getTeam(updateScore);
-
-        //If the team doesn't found, return
-        if (team == null) return;
-
-        //Set the prefix of the team to the content
-        team.setPrefix(content);
-
-        //Show the score
-        showScore(score, updateScore);
+        //Set the new score
+        setScore(score, slot);
 
     }
 
-    //Remove a score from the scoreboard
-    public void removeScore(int score) {
+    //Remove a score
+    public void removeScore(int slot) {
 
-        //Hide the score
-        hideScore(score);
-
-    }
-
-    //Show a score
-    private void showScore(int score, int updateScore) {
-
-        //Get the entry name
-        EntryName name = EntryName.fromScore(updateScore);
-
-        //If the entry doesn't found, return
-        if (name == null) return;
-
-        //If the score has an entry with this name, return
-        if (objective.getScore(name.getName()).isScoreSet()) return;
-
-        //Set the score
-        objective.getScore(name.getName()).setScore(score);
+        //Remove the score from scoreboard
+        scoreboard.resetScores(getScore(slot));
 
     }
 
-    //Hide a score
-    private void hideScore(int score) {
+    //Set a score
+    public void setScore(String score, int slot) {
 
-        //Get the entry name
-        EntryName name = EntryName.fromScore(score);
+        //Define score
+        String s;
 
-        //If the entry doesn't found, return
-        if (name == null) return;
+        //If the score is empty, set the score to the empty score value
+        if (score.equals("")) s = empty_scores[slot];
+        else s = score;
 
-        //If the score hasn't an entry with this name, return
-        if (!objective.getScore(name.getName()).isScoreSet()) return;
+        //Set the score in the array
+        scores[slot] = s;
 
-        //Reset the score
-        scoreboard.resetScores(name.getName());
+        //Set the score in the scoreboard objective
+        objective.getScore(s).setScore(slot);
+
+    }
+
+    //Get a score
+    public String getScore(int slot) {
+
+        //Return the score from array
+        return scores[slot];
 
     }
 
-    //Get a team by an score
-    private Team getTeam(int score) {
-
-        //Get entry with the score
-        EntryName entryName = EntryName.fromScore(score);
-
-        //Return null, if the entry name is null
-        if (entryName == null) return null;
-
-        //Get the team with the entry name
-        Team team = scoreboard.getEntryTeam(entryName.getName());
-
-        //If the team founded, return it
-        if (team != null) return team;
-
-        //Register a new team
-        team = scoreboard.registerNewTeam(entryName.name());
-
-        //Add the entry to the team
-        team.addEntry(entryName.getName());
-
-        //Return the new team
-        return team;
-
-    }
 
     //GETTERS
 
     //The scoreboard object
-    public Scoreboard getScoreboard() {
-        return scoreboard;
-    }
+    public Scoreboard getScoreboard() { return scoreboard; }
 
     //The display objective of the scoreboard
-    public Objective getObjective() {
-        return objective;
-    }
+    public Objective getObjective() { return objective; }
 
     //The owner player of the scoreboard
-    public Player getPlayer() {
-        return player;
-    }
+    public Player getPlayer() { return player; }
 
     //The display name of the scoreboard
-    public String getDisplayName() {
-        return displayName;
-    }
+    public String getDisplayName() { return displayName; }
+
+    //The array with all scores of the scoreboard
+    public String[] getScores() { return scores; }
 
 
     //SETTERS
 
     //The display name of the scoreboard
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
+    public void setDisplayName(String displayName) { this.displayName = displayName; }
 
 }
