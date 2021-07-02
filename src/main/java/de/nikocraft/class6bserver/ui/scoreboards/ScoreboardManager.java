@@ -21,7 +21,7 @@ public class ScoreboardManager {
     //VARIABLES
 
     //The map with all players and there active scoreboard
-    private HashMap<Player, ScoreboardBuilder> playerScoreboards;
+    private final HashMap<Player, ScoreboardBuilder> playerScoreboards;
 
     //The manager scheduler ID
     private int runID;

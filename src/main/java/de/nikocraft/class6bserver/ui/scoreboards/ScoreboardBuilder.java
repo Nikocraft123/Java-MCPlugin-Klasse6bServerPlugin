@@ -4,9 +4,6 @@ package de.nikocraft.class6bserver.ui.scoreboards;
 
 //IMPORTS
 
-//Nikocraft
-import de.nikocraft.class6bserver.ui.scoreboards.enums.EntryName;
-
 //Bukkit
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 
 //ABSTRACT SCOREBOARD BUILDER CLASS

@@ -8,6 +8,7 @@ package de.nikocraft.class6bserver;
 import de.nikocraft.class6bserver.commands.PermissionCommand;
 import de.nikocraft.class6bserver.events.ConnectionListeners;
 import de.nikocraft.class6bserver.permissions.PermissionManager;
+import de.nikocraft.class6bserver.ui.actionbars.ActionbarManager;
 import de.nikocraft.class6bserver.ui.scoreboards.ScoreboardManager;
 import de.nikocraft.class6bserver.ui.tablists.TablistManager;
 import de.nikocraft.class6bserver.utils.Config;
@@ -31,6 +32,9 @@ public final class Main extends JavaPlugin {
 
     //The scoreboard manager of the server
     private ScoreboardManager scoreboardManager;
+
+    //The actionbar manager of the server
+    private ActionbarManager actionbarManager;
 
     //The tablist manager of the server
     private TablistManager tablistManager;
@@ -73,6 +77,9 @@ public final class Main extends JavaPlugin {
 
         //Define scoreboard manager
         scoreboardManager = new ScoreboardManager();
+
+        //Define actionbar manager
+        actionbarManager = new ActionbarManager();
 
         //Define tablist manager
         tablistManager = new TablistManager();
@@ -120,6 +127,9 @@ public final class Main extends JavaPlugin {
 
     //The scoreboard manager of the server
     public ScoreboardManager getScoreboardManager() { return scoreboardManager; }
+
+    //The actionbar manager of the server
+    public ActionbarManager getActionbarManager() { return actionbarManager; }
 
     //The tablist manager of the server
     public TablistManager getTablistManager() { return tablistManager; }
