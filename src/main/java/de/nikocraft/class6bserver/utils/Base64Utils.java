@@ -21,8 +21,8 @@ public class Base64Utils {
 
     //STATIC METHODS
 
-    //Convert an item stack array to a base 64
-    public static ItemStack[] convertItemStackArrayToBase64(String base64) throws IOException {
+    //Convert a base 64 to an item stack array
+    public static ItemStack[] convertBase64ToItemStackArray(String base64) throws IOException {
 
         try {
 
@@ -48,25 +48,29 @@ public class Base64Utils {
 
     }
 
-    //Convert a base 64 to an item stack array
-    public static String convertBase64ToItemStackArray(ItemStack[] items) throws IllegalStateException {
+    //Convert an item stack array to a base 64
+    public static String convertItemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
 
         try {
+
+            //Get Bukkit object and byte array output stream from item stack
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
 
-            // Write the size of the inventory
+            //Write the size of the base 64
             dataOutput.writeInt(items.length);
 
-            // Save every element in the list
-            for (int i = 0; i < items.length; i++) {
-                dataOutput.writeObject(items[i]);
-            }
+            //Read all items into base 64
+            for (int i = 0; i < items.length; i++) dataOutput.writeObject(items[i]);
 
-            // Serialize that array
+            //Close the output stream
             dataOutput.close();
+
+            //Return encoded byte array as base 64 string
             return Base64Coder.encodeLines(outputStream.toByteArray());
+
         } catch (Exception e) {
+            //Catch Error
             throw new IllegalStateException("Unable to save item stacks.", e);
         }
     }

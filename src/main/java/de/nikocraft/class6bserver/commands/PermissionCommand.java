@@ -53,14 +53,14 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
             case "player":
             case "p":
 
-                //Handel player permission command
-                return handelPlayerCommand(sender, command, label, args);
+                //Handle player permission command
+                return handlePlayerCommand(sender, command, label, args);
 
             case "rank":
             case "r":
 
-                //Handel rank permission command
-                return handelRankCommand(sender, command, label, args);
+                //Handle rank permission command
+                return handleRankCommand(sender, command, label, args);
 
             default:
 
@@ -186,8 +186,8 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
 
     //METHODS
 
-    //Handel player permission command
-    private boolean handelPlayerCommand(CommandSender sender, Command command, String label, String[] args) {
+    //Handle player permission command
+    private boolean handlePlayerCommand(CommandSender sender, Command command, String label, String[] args) {
 
         //Is the sender a player
         boolean isPlayer = sender instanceof Player;
@@ -376,8 +376,8 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
 
     }
 
-    //Handel rank permission command
-    private boolean handelRankCommand(CommandSender sender, Command command, String label, String[] args) {
+    //Handle rank permission command
+    private boolean handleRankCommand(CommandSender sender, Command command, String label, String[] args) {
 
         //Is the sender a player
         boolean isPlayer = sender instanceof Player;

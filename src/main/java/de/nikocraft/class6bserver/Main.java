@@ -45,6 +45,9 @@ public final class Main extends JavaPlugin {
     //The permission system configuration
     private Config permissionConfig;
 
+    //The world system configuration
+    private Config worldConfig;
+
 
     //OVERRIDE METHODS
 
@@ -59,6 +62,7 @@ public final class Main extends JavaPlugin {
         String configPath = "./plugins/Klasse6bServer/Configs/";
         masterConfig = new Config(configPath, "MasterConfig.yml");
         permissionConfig = new Config(configPath, "PermissionConfig.yml");
+        worldConfig = new Config(configPath, "WorldConfig.yml");
 
     }
 
@@ -93,6 +97,7 @@ public final class Main extends JavaPlugin {
         //Save configurations
         masterConfig.save();
         permissionConfig.save();
+        worldConfig.save();
 
     }
 
@@ -139,5 +144,8 @@ public final class Main extends JavaPlugin {
 
     //The permission system configuration
     public Config getPermissionConfig() { return permissionConfig; }
+
+    //The world system configuration
+    public Config getWorldConfig() { return worldConfig; }
 
 }
