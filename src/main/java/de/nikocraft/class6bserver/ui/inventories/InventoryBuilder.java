@@ -14,10 +14,10 @@ public abstract class InventoryBuilder {
     //VARIABLES
 
     //The inventory object
-    private Inventory inventory;
+    private final Inventory inventory;
 
     //The title of the inventory
-    private String title;
+    private final String title;
 
 
     //CONSTRUCTORS
