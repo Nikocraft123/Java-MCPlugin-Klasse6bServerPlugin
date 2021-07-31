@@ -30,8 +30,9 @@ public class TablistManager {
         String ip;
 
         //Try to get the server ip
-        try { ip = InetAddress.getLocalHost().getHostAddress(); }
-        catch (UnknownHostException e) { ip = "Unknown Ip Address"; }
+        //try { ip = InetAddress.getLocalHost().getHostAddress(); }
+        //catch (UnknownHostException e) { ip = "Unknown Ip Address"; }
+        ip = Bukkit.getIp();
 
         //Set the header of the tablist
         player.setPlayerListHeader(ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "          " + ChatColor.GRAY +

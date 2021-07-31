@@ -56,8 +56,9 @@ public class MainLobbyScoreboard extends ScoreboardBuilder {
         setScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Aktive Spieler:" + ChatColor.GOLD + " " + Bukkit.getOnlinePlayers().size(), 3);
         setScore(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Erreichte Ziele:" + ChatColor.GOLD + " " + 0, 2);
         setScore("", 1);
-        try { setScore(ChatColor.DARK_PURPLE + "Server IP: " + ChatColor.ITALIC + InetAddress.getLocalHost().getHostAddress(), 0); }
-        catch (UnknownHostException e) { setScore(ChatColor.DARK_PURPLE + "Server IP: " + ChatColor.ITALIC + "Unknown Ip Address", 0); }
+        //try { setScore(ChatColor.DARK_PURPLE + "Server IP: " + ChatColor.ITALIC + InetAddress.getLocalHost().getHostAddress(), 0); }
+        //catch (UnknownHostException e) { setScore(ChatColor.DARK_PURPLE + "Server IP: " + ChatColor.ITALIC + "Unknown Ip Address", 0); }
+        setScore(ChatColor.DARK_PURPLE + "Server IP: " + ChatColor.ITALIC + Bukkit.getIp(), 0);
 
     }
 
